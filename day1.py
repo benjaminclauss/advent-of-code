@@ -1,4 +1,4 @@
-file_path = "input.txt"
+file_path = "input1.txt"
 
 with open(file_path, "r") as file:
     lines = file.readlines()

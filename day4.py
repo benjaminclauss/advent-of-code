@@ -1,5 +1,3 @@
-import re
-
 file_path = "input4.txt"
 
 with open(file_path, "r") as file:

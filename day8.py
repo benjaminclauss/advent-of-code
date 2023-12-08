@@ -14,32 +14,28 @@ with open(file_path, "r") as file:
     
     # Part 1
     if 'AAA' in nodes:
-        step = 0
+        number_of_steps = 0
         current_node = 'AAA'
-        while True:
-            if current_node == 'ZZZ':
-                break
+        while not current_node == 'ZZZ':
             paths_for_node = nodes[current_node]
-            move = int(instructions[step % len(instructions)])
+            move = int(instructions[number_of_steps % len(instructions)])
             current_node = paths_for_node[move]
-            step += 1
+            number_of_steps += 1
         
-        print(step)
+        print(number_of_steps)
    
     # Part 2
     a_nodes = list(filter(lambda n: n.endswith('A'), nodes))
     steps = list()
     for a_node in a_nodes:
-        step = 0
+        number_of_steps = 0
         current_node = a_node
-        while True:
-            if current_node.endswith('Z'):
-                break
+        while not current_node.endswith('Z'):
             paths_for_node = nodes[current_node]
-            move = int(instructions[step % len(instructions)])
+            move = int(instructions[number_of_steps % len(instructions)])
             current_node = paths_for_node[move]
-            step += 1
-        steps.append(step)
+            number_of_steps += 1
+        steps.append(number_of_steps)
     
     print(math.lcm(*steps))
     

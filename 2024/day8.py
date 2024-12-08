@@ -17,6 +17,8 @@ for line in reversed(puzzle_input):
 MAX_X = len(puzzle_input[0])
 MAX_Y = len(puzzle_input)
 
+# Part 1
+
 def calculate_vector(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
@@ -43,5 +45,33 @@ for antenna, antenna_locations in antennas.items():
         p = calculate_next_point(point1, v)
         antinodes.add(p)
 
-points_in_map = [point for point in antinodes if point[0] in range(0, MAX_X) and point[1] in range(0, MAX_Y)]
+def in_map(point):
+    return point[0] in range(0, MAX_X) and point[1] in range(0, MAX_Y)
+
+points_in_map = [point for point in antinodes if in_map(point)]
 print(len(points_in_map))
+
+# Part 2
+
+antinodes = set()
+
+for antenna, antenna_locations in antennas.items():
+    antenna_location_pairs = list(itertools.combinations(antenna_locations, 2))
+    for pair in antenna_location_pairs:
+        point1, point2 = pair
+        antinodes.add(point1)
+        antinodes.add(point2)
+        # Get next point for first antenna.
+        v = calculate_vector(point1, point2)
+        p = calculate_next_point(point2, v)
+        while in_map(p):
+            antinodes.add(p)
+            p = calculate_next_point(p, v)
+        # Get next point for second antenna.
+        v = calculate_vector(point2, point1)
+        p = calculate_next_point(point1, v)
+        while in_map(p):
+            antinodes.add(p)
+            p = calculate_next_point(p, v)
+
+print(len(antinodes))

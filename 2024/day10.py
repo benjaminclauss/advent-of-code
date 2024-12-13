@@ -118,3 +118,38 @@ for trailhead in zero_nodes:
     trailhead_score_sum += score
 
 print(trailhead_score_sum) 
+
+# Part 2
+def bfs_count_distinct_paths(graph, start, target):
+    # Queue stores (current_node, path_taken_to_current_node)
+    queue = deque([(start, [start])])
+    
+    # List to store all distinct paths from start to target
+    all_paths = []
+    
+    while queue:
+        current_node, path = queue.popleft()
+        
+        # If we've reached the target, store the path
+        if current_node == target:
+            all_paths.append(path)
+        
+        # Explore all neighbors of the current node
+        for neighbor in graph[current_node]:
+            # We avoid cycles within the same path by checking if the neighbor is already in the path
+            if neighbor not in path:
+                queue.append((neighbor, path + [neighbor]))
+    
+    # Return the number of distinct paths and the actual paths
+    return len(all_paths), all_paths
+
+
+trailhead_score_sum = 0
+for trailhead in zero_nodes:
+    score = 0
+    for peak in nine_nodes:
+        num_paths, paths = bfs_count_distinct_paths(graph, trailhead, peak)
+        score += num_paths 
+    trailhead_score_sum += score
+
+print(trailhead_score_sum)
